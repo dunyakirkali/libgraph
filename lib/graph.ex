@@ -1579,9 +1579,15 @@ defmodule Graph do
       ...> g = Graph.add_edges(g, [{:a, :b}, {:a, :c}, {:b, :c}, {:c, :d}])
       ...> Graph.reachable(g, [:a])
       [:d, :c, :b, :a]
+
+      iex> g = Graph.new(type: :undirected) |> Graph.add_vertices([:a, :b, :c, :d])
+      ...> g = Graph.add_edges(g, [{:a, :b}, {:c, :d}])
+      ...> Graph.reachable(g, [:a])
+      [:b, :a]
   """
   @spec reachable(t, [vertex]) :: [[vertex]]
-  defdelegate reachable(g, vs), to: Graph.Directed
+  def reachable(%__MODULE__{type: :undirected} = g, vs), do: Graph.Undirected.reachable(g, vs)
+  def reachable(%__MODULE__{} = g, vs), do: Graph.Directed.reachable(g, vs)
 
   @doc """
   Returns an unsorted list of vertices from the graph, such that for each vertex in the list (call it `v`),
