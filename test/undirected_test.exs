@@ -1,7 +1,7 @@
 defmodule UndirectedTest do
   use ExUnit.Case, async: true
 
-  describe "reachable in undirected graph" do
+  describe "reachable/2" do
     test "includes all vertices in connected component" do
       graph =
         Graph.new(type: :undirected)
