@@ -1,4 +1,4 @@
-defmodule ReachableTest do
+defmodule UndirectedTest do
   use ExUnit.Case, async: true
 
   test "reachable in undirected graph" do
@@ -14,9 +14,10 @@ defmodule ReachableTest do
     result =
       Graph.vertices(graph)
       |> Enum.map(fn vertex ->
-        Graph.reachable(graph, [vertex]) |> Enum.sort()
+        graph
+        |> Graph.Undirected.reachable([vertex])
+        |> Enum.sort()
       end)
-      |> Enum.uniq()
 
     assert result == [
              [:a, :b, :c],
